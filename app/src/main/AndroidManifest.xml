@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.miao.ijkplayermiao">
 
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许访问互联网，如果你的视频源是在线的 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许检查网络连接状态 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 允许保持设备唤醒状态，以便在播放期间保持屏幕亮起 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许在设备上读写文件，如果你需要缓存视频或其他媒体文件到设备上 -->
+
     <application
         android:allowBackup="true"
+        android:allowNativeHeapPointerTagging="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +20,7 @@
         android:theme="@style/Theme.IJKPlayerMiao"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".VideoPlayerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +28,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 声明IJK服务 -->
+        <service
+            android:name="com.miao.ijkplayermiao.IJKPlayerService"
+            android:process=":ijk_process"
+            android:exported="true">
+            <!-- 可以添加其他服务配置 -->
+            <intent-filter>
+                <action android:name="android.intent.category.MY_SERVICE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
